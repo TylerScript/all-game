@@ -1,0 +1,122 @@
+-- Load OrionLib
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source'), true))()
+
+-- Key acquisition using KeySystemUI
+local KeySystemUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/MaGiXxScripter0/keysystemv2api/master/ui/xrer_mstudio45.lua"))()
+KeySystemUI.New({
+    ApplicationName = "Afxcaxiroblox", -- Your key system application name
+    Name = "Script Hub", -- Script name
+    Info = "RobloXploit Script Hub", -- Info displayed in the GUI
+    DiscordInvite = "https://discord.gg/Mtjwugd4fh", -- Optional Discord invite
+    AuthType = "clientid" -- Authentication type, can be "clientid" or "ip"
+})
+repeat task.wait() until KeySystemUI.Finished() or KeySystemUI.Closed
+
+if KeySystemUI.Finished() and KeySystemUI.Closed == false then
+    print("Key verified, ready to load script")
+
+    -- Start the script hub UI after key verification
+    local HubWindow = OrionLib:MakeWindow({Name = "Script Hub", HidePremium = false, SaveConfig = false, IntroEnabled = false})
+
+    -- Function to check game ID and display the corresponding script
+    function checkGameID()
+        local gameID = tostring(game.PlaceId)
+        print("Game ID detected: " .. gameID)
+        
+        local HubTab = HubWindow:MakeTab({
+            Name = "Blox Fruit",
+            Icon = "rbxassetid://4483345998",
+            PremiumOnly = false
+        })
+
+        if gameID == "7449423635" or gameID == "2753915549" or gameID == "4442272183" then -- Blox Fruit Game IDs
+            HubTab:AddButton({
+                Name = "Redz Hub",
+                Callback = function()
+                    print("Running Redz Hub")
+                    loadstring(game:HttpGet("https://raw.githubusercontent.com/REDzHUB/BloxFruits/main/redz9999"))()
+                 end
+            })
+            
+            -- Adding the new "Auto Chest" tab
+            local AutoChestTab = HubWindow:MakeTab({
+                Name = "Auto Chest",
+                Icon = "rbxassetid://4483345998",
+                PremiumOnly = false
+            })
+
+            -- Adding a button to execute the Auto Chest script
+            AutoChestTab:AddButton({
+                Name = "Start Auto Chest",
+                Callback = function()
+                    print("Starting Auto Chest Script")
+                    _G.JoinTeam = "Marines" -- Change to "Pirates" if needed
+                    _G.Stop_If_Has_Items = true -- Set to false if you want to keep collecting
+                    loadstring(game:HttpGet("https://github.com/PNguyen0199/Script/raw/main/Trash_Auto_Chest.lua"))()
+                end
+            })
+
+            HubTab:AddButton({
+                Name = "Redz Hub",
+                Callback = function()
+                    print("Running Redz Hub")
+                    loadstring(game:HttpGet("https://raw.githubusercontent.com/REDzHUB/BloxFruits/main/redz9999"))()
+                 end
+            }) 
+            HubTab:AddButton({
+                Name = "Redz Hub",
+                Callback = function()
+                    print("Running Redz Hub")
+                    loadstring(game:HttpGet("https://raw.githubusercontent.com/REDzHUB/BloxFruits/main/redz9999"))()
+                 end
+            }) 
+            HubTab:AddButton({
+                Name = "Redz Hub",
+                Callback = function()
+                    print("Running Redz Hub")
+                    loadstring(game:HttpGet("https://raw.githubusercontent.com/REDzHUB/BloxFruits/main/redz9999"))()
+                 end
+            })
+        elseif gameID == "16146832113" then -- Another Game ID
+            HubTab:AddButton({
+                Name = "Anime Vanguards",
+                Callback = function()
+                    print("Running script for Game 2")
+                    loadstring(game:HttpGet("https://example.com/script_for_game_2.lua", true))()
+                end
+            })
+        else
+            HubTab:AddButton({
+                Name = "Default Script",
+                Callback = function()
+                    print("Running default script")
+                    loadstring(game:HttpGet("https://example.com/default_script.lua", true))()
+                end
+            })
+        end
+
+        HubTab:AddButton({
+            Name = "Close Script Hub",
+            Callback = function()
+                HubWindow:Hide() -- Hide the Script Hub instead of destroying it
+            end
+        })
+    end
+    
+    -- Call the function to check the game ID
+    checkGameID()
+
+    -- Bind a function to reopen the Script Hub UI when the Right Shift key is pressed
+    local UserInputService = game:GetService("UserInputService")
+    UserInputService.InputBegan:Connect(function(input, gameProcessed)
+        if input.KeyCode == Enum.KeyCode.RightShift and not gameProcessed then
+            if HubWindow.Enabled then
+                HubWindow:Hide() -- If the UI is already open, hide it
+            else
+                HubWindow:Show() -- If the UI is hidden, show it
+            end
+        end
+    end)
+else
+    print("Player closed the GUI.")
+end
